@@ -142,16 +142,15 @@ namespace UEProjectTool
                     JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
                     break;
                 case EJobType.CompileBP:
-                    JobCommand = $"{EnginePath} {ProjectFile} -run=CompileAllBlueprints";
+                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -run=CompileAllBlueprints";
                     break;
                 case EJobType.TestClient:
-                    JobCommand = $"{EnginePath} {ProjectFile} -game -log -resX=900 -resY=700 -windowed";
+                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -game -log -resX=900 -resY=700 -windowed";
                     break;
                 case EJobType.TestServer:
-                    JobCommand = $"{EnginePath} {ProjectFile} -server -log -Port=7777 -QueryPort={Port}";
+                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
                     break;
             }
-            MessageBox.Show(JobCommand);
 
             ProcessStartInfo process = new ProcessStartInfo();
             process.WindowStyle = ProcessWindowStyle.Normal;
