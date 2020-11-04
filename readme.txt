@@ -1,0 +1,1 @@
+Credits to https://www.flaticon.com/authors/alfredo-hernandez for the positive and minus icons
