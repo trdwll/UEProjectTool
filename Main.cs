@@ -89,7 +89,7 @@ namespace UEProjectTool
             {
                 cbSelectedEngine.Items.Add(s);
             }
-            if (cbSelectedEngine.Items.Count > 1)
+            if (cbSelectedEngine.Items.Count >= 1)
             {
                 if (cbSelectedEngine.Items[0].ToString() == string.Empty)
                 {
