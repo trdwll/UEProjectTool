@@ -42,6 +42,7 @@
             this.btnCompileBP = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnKillUE4 = new System.Windows.Forms.Button();
+            this.btnRunServerProfiling = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -100,7 +101,7 @@
             // 
             // btnTestClient
             // 
-            this.btnTestClient.Location = new System.Drawing.Point(6, 57);
+            this.btnTestClient.Location = new System.Drawing.Point(6, 124);
             this.btnTestClient.Name = "btnTestClient";
             this.btnTestClient.Size = new System.Drawing.Size(109, 32);
             this.btnTestClient.TabIndex = 5;
@@ -110,11 +111,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnRunServerProfiling);
             this.groupBox1.Controls.Add(this.btnTestServer);
             this.groupBox1.Controls.Add(this.btnTestClient);
-            this.groupBox1.Location = new System.Drawing.Point(12, 172);
+            this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(123, 100);
+            this.groupBox1.Size = new System.Drawing.Size(123, 162);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Testing";
@@ -123,7 +125,7 @@
             // 
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.btnBatchServer);
-            this.groupBox2.Location = new System.Drawing.Point(141, 176);
+            this.groupBox2.Location = new System.Drawing.Point(339, 110);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(172, 100);
             this.groupBox2.TabIndex = 7;
@@ -183,6 +185,16 @@
             this.btnKillUE4.UseVisualStyleBackColor = true;
             this.btnKillUE4.Click += new System.EventHandler(this.btnKillUE4_Click);
             // 
+            // btnRunServerProfiling
+            // 
+            this.btnRunServerProfiling.Location = new System.Drawing.Point(6, 57);
+            this.btnRunServerProfiling.Name = "btnRunServerProfiling";
+            this.btnRunServerProfiling.Size = new System.Drawing.Size(109, 32);
+            this.btnRunServerProfiling.TabIndex = 6;
+            this.btnRunServerProfiling.Text = "RTS Profiling";
+            this.btnRunServerProfiling.UseVisualStyleBackColor = true;
+            this.btnRunServerProfiling.Click += new System.EventHandler(this.btnRunServerProfiling_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +237,7 @@
         private System.Windows.Forms.Button btnCompileBP;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button btnKillUE4;
+        private System.Windows.Forms.Button btnRunServerProfiling;
     }
 }
 

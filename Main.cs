@@ -23,6 +23,7 @@ namespace UEProjectTool
         {
             TestClient,
             TestServer,
+            TestServerProfiling,
             BatchServer,
             CompileBP
         }
@@ -67,19 +68,20 @@ namespace UEProjectTool
             {
                 string[] SearchDirectories = { "Intermediate", "Binaries", "Saved", "Build" };
                 string[] dirs = Directory.GetDirectories(Path.GetDirectoryName(ProjectFile), "*", SearchOption.AllDirectories);
-
+                int count = 0;
                 foreach (string directory in dirs)
                 {
-                    if (SearchDirectories.Any(directory.Contains))
+                    if (SearchDirectories.Any(Path.GetFileName(directory).Equals))
                     {
                         if (Directory.Exists(directory))
                         {
                             Directory.Delete(directory, true);
+                            count++;
                         }
                     }
                 }
 
-                MessageBox.Show("Cleaned up the project!");
+                MessageBox.Show($"Deleted {count} directories!");
             }
         }
 
@@ -150,6 +152,9 @@ namespace UEProjectTool
                 case EJobType.TestServer:
                     JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
                     break;
+                case EJobType.TestServerProfiling:
+                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port} -networkprofiler=true";
+                    break;
             }
 
             ProcessStartInfo process = new ProcessStartInfo();
@@ -167,6 +172,10 @@ namespace UEProjectTool
         private void btnTestServer_Click(object sender, EventArgs e)
         {
             RunCmd(EJobType.TestServer, 27015);
+        }
+        private void btnRunServerProfiling_Click(object sender, EventArgs e)
+        {
+            RunCmd(EJobType.TestServerProfiling, 27015);
         }
 
         private void btnTestClient_Click(object sender, EventArgs e)
