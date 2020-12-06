@@ -4,7 +4,6 @@ pipeline {
     node {
       label 'Windows'
     }
-
   }
   
   stages {
@@ -21,5 +20,13 @@ pipeline {
       }
     }
 
+    stage('Publish') {
+      when {
+        branch "main"
+      }
+      steps {
+        bat "py -u C:\\jenkins.py UEProjectTool Publish \"%WORKSPACE%\""
+      }
+    }
   }
 }
