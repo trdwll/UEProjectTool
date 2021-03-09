@@ -30,7 +30,6 @@ namespace UEProjectTool
         private string PathToEngineExe = "\\Engine\\Binaries\\Win64\\UE4Editor.exe";
         private bool bEngineExists = false;
         private string ProjectFile = "";
-
         private List<string> EngineInstalls = new List<string>();
 
         private void btnCleanProject_Click(object sender, EventArgs e)
@@ -61,12 +60,29 @@ namespace UEProjectTool
 
                 MessageBox.Show($"{(cbRecycle.Checked ? "Recycled" : "Deleted")} {count} directories!");
 
-                // #TODO: Generate new sln
+                string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
+                if (File.Exists(UBT))
+                {
+                    string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
+
+                    if (File.Exists(ProjectSln))
+                    {
+                        File.Delete(ProjectSln);
+                    }
+
+                    string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
+                    ProcessStartInfo process = new ProcessStartInfo();
+                    process.WindowStyle = ProcessWindowStyle.Normal;
+                    process.FileName = "cmd.exe";
+                    process.Arguments = $"/k \"{command}\"";
+                    Process.Start(process);
+                }
             }
         }
 
         void TryGetEngineInstalls()
         {
+            // #TODO: Find the source build installs also
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\EpicGames\\Unreal Engine"))
             {
                 string[] keys = key.GetSubKeyNames();
