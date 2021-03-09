@@ -36,7 +36,7 @@ namespace UEProjectTool
         {
             if (bEngineExists)
             {
-                string[] SearchDirectories = { "Intermediate", "Binaries", "Saved", "Build" };
+                string[] SearchDirectories = { "Intermediate", "Binaries", "Saved" };
                 string[] dirs = Directory.GetDirectories(Path.GetDirectoryName(ProjectFile), "*", SearchOption.AllDirectories);
                 int count = 0;
                 foreach (string directory in dirs)
