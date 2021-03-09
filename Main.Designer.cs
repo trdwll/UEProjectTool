@@ -40,6 +40,7 @@
             this.btnCompileBP = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnKillUE4 = new System.Windows.Forms.Button();
+            this.cbRecycle = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -170,11 +171,22 @@
             this.btnKillUE4.UseVisualStyleBackColor = true;
             this.btnKillUE4.Click += new System.EventHandler(this.btnKillUE4_Click);
             // 
+            // cbRecycle
+            // 
+            this.cbRecycle.AutoSize = true;
+            this.cbRecycle.Location = new System.Drawing.Point(345, 216);
+            this.cbRecycle.Name = "cbRecycle";
+            this.cbRecycle.Size = new System.Drawing.Size(137, 17);
+            this.cbRecycle.TabIndex = 12;
+            this.cbRecycle.Text = "Move To Recycling Bin";
+            this.cbRecycle.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 288);
+            this.Controls.Add(this.cbRecycle);
             this.Controls.Add(this.btnKillUE4);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnCompileBP);
@@ -187,6 +199,7 @@
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UEProjectTool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
@@ -209,6 +222,7 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Button btnKillUE4;
         private System.Windows.Forms.Button btnRunServerProfiling;
+        private System.Windows.Forms.CheckBox cbRecycle;
     }
 }
 

@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Microsoft.Win32;
+using Microsoft.VisualBasic.FileIO;
+using SearchOption = System.IO.SearchOption;
+
 namespace UEProjectTool
 {
     public partial class Main : Form
@@ -48,13 +51,20 @@ namespace UEProjectTool
                     {
                         if (Directory.Exists(directory))
                         {
-                            Directory.Delete(directory, true);
+                            if (cbRecycle.Checked)
+                            {
+                                FileSystem.DeleteDirectory(directory, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin);
+                            }
+                            else
+                            {
+                                Directory.Delete(directory, true);
+                            }
                             count++;
                         }
                     }
                 }
 
-                MessageBox.Show($"Deleted {count} directories!");
+                MessageBox.Show($"{(cbRecycle.Checked ? "Recycled" : "Deleted")} {count} directories!");
 
                 // #TODO: Generate new sln
             }
@@ -94,6 +104,8 @@ namespace UEProjectTool
             {
                 ProjectFile = files[0];
             }
+
+            cbRecycle.Checked = Properties.Settings.Default.Recycle;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -166,6 +178,12 @@ namespace UEProjectTool
             {
                 process.Kill();
             }
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Recycle = cbRecycle.Checked;
+            Properties.Settings.Default.Save();
         }
     }
 }
