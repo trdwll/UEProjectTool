@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
+using Microsoft.Win32;
 namespace UEProjectTool
 {
     public partial class Main : Form
@@ -28,39 +29,11 @@ namespace UEProjectTool
             CompileBP
         }
 
-        // TODO: default engine install paths
-        // TODO: default selected install should be last selected
-
         private string PathToEngineExe = "\\Engine\\Binaries\\Win64\\UE4Editor.exe";
         private bool bEngineExists = false;
         private string ProjectFile = "";
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog fdb = new FolderBrowserDialog()
-            {
-                Description = "Select your UE4 install path (Just the UE_4.x and not Engine etc)"
-            };
-
-            if (fdb.ShowDialog() == DialogResult.OK)
-            {
-                string EnginePath = fdb.SelectedPath;
-                string EngineExe = $"{EnginePath}{PathToEngineExe}";
-
-                if (System.IO.File.Exists(EngineExe))
-                {
-                    MessageBox.Show("Engine file exists!");
-                    Properties.Settings.Default.EnginePath += Properties.Settings.Default.EnginePath != string.Empty ? $";{EnginePath}" : $"{EnginePath}";
-                    Properties.Settings.Default.Save();
-                    cbSelectedEngine.Items.Add(EnginePath);
-                    cbSelectedEngine.SelectedIndex = 0;
-                }
-                else
-                {
-                    MessageBox.Show($"You selected the path {EnginePath} and it shouldn't be this. No UE4Editor.exe was found.");
-                }
-            }
-        }
+        private List<string> EngineInstalls = new List<string>();
 
         private void btnCleanProject_Click(object sender, EventArgs e)
         {
@@ -82,50 +55,44 @@ namespace UEProjectTool
                 }
 
                 MessageBox.Show($"Deleted {count} directories!");
+
+                // #TODO: Generate new sln
+            }
+        }
+
+        void TryGetEngineInstalls()
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\EpicGames\\Unreal Engine"))
+            {
+                string[] keys = key.GetSubKeyNames();
+                foreach (string k in keys)
+                {
+                    string EngineInstall = key.OpenSubKey(k).GetValue("InstalledDirectory").ToString();
+
+                    if (Directory.Exists(EngineInstall))
+                    {
+                        cbSelectedEngine.Items.Add(EngineInstall);
+                    }
+                }
+
+                key.Close();
+            }
+
+            if (cbSelectedEngine.Items.Count > 0)
+            {
+                cbSelectedEngine.SelectedIndex = 0;
+                bEngineExists = true;
             }
         }
 
         protected override void OnLoad(System.EventArgs e)
         {
-            foreach (string s in Properties.Settings.Default.EnginePath.Split(';'))
-            {
-                cbSelectedEngine.Items.Add(s);
-            }
-            if (cbSelectedEngine.Items.Count >= 1)
-            {
-                if (cbSelectedEngine.Items[0].ToString() == string.Empty)
-                {
-                    cbSelectedEngine.Items.RemoveAt(0);
-                }
-                cbSelectedEngine.SelectedIndex = 0;
-                bEngineExists = true;
-            }
+            TryGetEngineInstalls();
+
             string[] files = System.IO.Directory.GetFiles(Application.StartupPath, "*.uproject");
             if (files.Length > 0)
             {
                 ProjectFile = files[0];
-            }
-        }
-
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-            string selected = "";
-            foreach (string s in Properties.Settings.Default.EnginePath.Split(';'))
-            {
-                if (s == cbSelectedEngine.SelectedItem.ToString())
-                {
-                    continue;
-                }
-
-                selected += selected != string.Empty ? $";{s}" : $"{s}";
-            }
-
-            Properties.Settings.Default.EnginePath = selected;
-            Properties.Settings.Default.Save();
-            cbSelectedEngine.Items.RemoveAt(cbSelectedEngine.SelectedIndex);
-            if (cbSelectedEngine.Items.Count > 0)
-            {
-                cbSelectedEngine.SelectedIndex = 0;
             }
         }
 

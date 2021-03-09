@@ -28,21 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.cbSelectedEngine = new System.Windows.Forms.ComboBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnRemove = new System.Windows.Forms.Button();
             this.btnCleanProject = new System.Windows.Forms.Button();
             this.btnTestServer = new System.Windows.Forms.Button();
             this.btnTestClient = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnRunServerProfiling = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.btnBatchServer = new System.Windows.Forms.Button();
             this.btnCompileBP = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnKillUE4 = new System.Windows.Forms.Button();
-            this.btnRunServerProfiling = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -54,30 +51,8 @@
             this.cbSelectedEngine.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSelectedEngine.Location = new System.Drawing.Point(12, 12);
             this.cbSelectedEngine.Name = "cbSelectedEngine";
-            this.cbSelectedEngine.Size = new System.Drawing.Size(423, 32);
+            this.cbSelectedEngine.Size = new System.Drawing.Size(499, 32);
             this.cbSelectedEngine.TabIndex = 0;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAdd.BackgroundImage")));
-            this.btnAdd.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnAdd.Location = new System.Drawing.Point(441, 13);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(32, 32);
-            this.btnAdd.TabIndex = 1;
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnRemove
-            // 
-            this.btnRemove.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnRemove.BackgroundImage")));
-            this.btnRemove.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRemove.Location = new System.Drawing.Point(479, 13);
-            this.btnRemove.Name = "btnRemove";
-            this.btnRemove.Size = new System.Drawing.Size(32, 32);
-            this.btnRemove.TabIndex = 2;
-            this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
             // 
             // btnCleanProject
             // 
@@ -120,6 +95,16 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Testing";
+            // 
+            // btnRunServerProfiling
+            // 
+            this.btnRunServerProfiling.Location = new System.Drawing.Point(6, 57);
+            this.btnRunServerProfiling.Name = "btnRunServerProfiling";
+            this.btnRunServerProfiling.Size = new System.Drawing.Size(109, 32);
+            this.btnRunServerProfiling.TabIndex = 6;
+            this.btnRunServerProfiling.Text = "RTS Profiling";
+            this.btnRunServerProfiling.UseVisualStyleBackColor = true;
+            this.btnRunServerProfiling.Click += new System.EventHandler(this.btnRunServerProfiling_Click);
             // 
             // groupBox2
             // 
@@ -185,16 +170,6 @@
             this.btnKillUE4.UseVisualStyleBackColor = true;
             this.btnKillUE4.Click += new System.EventHandler(this.btnKillUE4_Click);
             // 
-            // btnRunServerProfiling
-            // 
-            this.btnRunServerProfiling.Location = new System.Drawing.Point(6, 57);
-            this.btnRunServerProfiling.Name = "btnRunServerProfiling";
-            this.btnRunServerProfiling.Size = new System.Drawing.Size(109, 32);
-            this.btnRunServerProfiling.TabIndex = 6;
-            this.btnRunServerProfiling.Text = "RTS Profiling";
-            this.btnRunServerProfiling.UseVisualStyleBackColor = true;
-            this.btnRunServerProfiling.Click += new System.EventHandler(this.btnRunServerProfiling_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -206,8 +181,6 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCleanProject);
-            this.Controls.Add(this.btnRemove);
-            this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.cbSelectedEngine);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -225,8 +198,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox cbSelectedEngine;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnRemove;
         private System.Windows.Forms.Button btnCleanProject;
         private System.Windows.Forms.Button btnTestServer;
         private System.Windows.Forms.Button btnTestClient;
