@@ -41,6 +41,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnKillUE4 = new System.Windows.Forms.Button();
             this.cbRecycle = new System.Windows.Forms.CheckBox();
+            this.cbGenSolution = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -181,11 +182,22 @@
             this.cbRecycle.Text = "Move To Recycling Bin";
             this.cbRecycle.UseVisualStyleBackColor = true;
             // 
+            // cbGenSolution
+            // 
+            this.cbGenSolution.AutoSize = true;
+            this.cbGenSolution.Location = new System.Drawing.Point(345, 239);
+            this.cbGenSolution.Name = "cbGenSolution";
+            this.cbGenSolution.Size = new System.Drawing.Size(123, 17);
+            this.cbGenSolution.TabIndex = 13;
+            this.cbGenSolution.Text = "Regenerate Solution";
+            this.cbGenSolution.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 288);
+            this.Controls.Add(this.cbGenSolution);
             this.Controls.Add(this.cbRecycle);
             this.Controls.Add(this.btnKillUE4);
             this.Controls.Add(this.linkLabel1);
@@ -223,6 +235,7 @@
         private System.Windows.Forms.Button btnKillUE4;
         private System.Windows.Forms.Button btnRunServerProfiling;
         private System.Windows.Forms.CheckBox cbRecycle;
+        private System.Windows.Forms.CheckBox cbGenSolution;
     }
 }
 

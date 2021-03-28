@@ -34,5 +34,17 @@ namespace UEProjectTool.Properties {
                 this["Recycle"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GenSolution {
+            get {
+                return ((bool)(this["GenSolution"]));
+            }
+            set {
+                this["GenSolution"] = value;
+            }
+        }
     }
 }

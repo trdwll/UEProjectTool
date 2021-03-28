@@ -60,22 +60,25 @@ namespace UEProjectTool
 
                 MessageBox.Show($"{(cbRecycle.Checked ? "Recycled" : "Deleted")} {count} directories!");
 
-                string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
-                if (File.Exists(UBT))
+                if (cbGenSolution.Checked)
                 {
-                    string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
-
-                    if (File.Exists(ProjectSln))
+                    string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
+                    if (File.Exists(UBT))
                     {
-                        File.Delete(ProjectSln);
-                    }
+                        string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
 
-                    string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
-                    ProcessStartInfo process = new ProcessStartInfo();
-                    process.WindowStyle = ProcessWindowStyle.Normal;
-                    process.FileName = "cmd.exe";
-                    process.Arguments = $"/k \"{command}\"";
-                    Process.Start(process);
+                        if (File.Exists(ProjectSln))
+                        {
+                            File.Delete(ProjectSln);
+                        }
+
+                        string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
+                        ProcessStartInfo process = new ProcessStartInfo();
+                        process.WindowStyle = ProcessWindowStyle.Normal;
+                        process.FileName = "cmd.exe";
+                        process.Arguments = $"/k \"{command}\"";
+                        Process.Start(process);
+                    }
                 }
             }
         }
@@ -99,6 +102,7 @@ namespace UEProjectTool
                 key.Close();
             }
 
+            // #TODO: read the project file and set the selected index to that engine
             if (cbSelectedEngine.Items.Count > 0)
             {
                 cbSelectedEngine.SelectedIndex = 0;
@@ -117,6 +121,7 @@ namespace UEProjectTool
             }
 
             cbRecycle.Checked = Properties.Settings.Default.Recycle;
+            cbGenSolution.Checked = Properties.Settings.Default.GenSolution;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -194,6 +199,7 @@ namespace UEProjectTool
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Recycle = cbRecycle.Checked;
+            Properties.Settings.Default.GenSolution = cbGenSolution.Checked;
             Properties.Settings.Default.Save();
         }
     }
