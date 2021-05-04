@@ -10,13 +10,13 @@ pipeline {
 
     stage('Build Release') {
       steps {
-        bat "\"${tool 'MSBuild'}\" UEProjectTool.csproj /p:Configuration=Release"
+        bat "\"${tool 'MSBuild'}\" UEProjectTool.csproj /p:Configuration=Release  /p:ProductVersion=1.0.0.${currentBuild.number}"
       }
     }
 
     stage('Build Debug') {
       steps {
-        bat "\"${tool 'MSBuild'}\" UEProjectTool.csproj /p:Configuration=Debug"
+        bat "\"${tool 'MSBuild'}\" UEProjectTool.csproj /p:Configuration=Debug  /p:ProductVersion=1.0.0.${currentBuild.number}"
       }
     }
 
