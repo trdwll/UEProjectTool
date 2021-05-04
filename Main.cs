@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Web.Script.Serialization;
+using System.Reflection;
 
 using Microsoft.Win32;
 using Microsoft.VisualBasic.FileIO;
@@ -86,6 +87,11 @@ namespace UEProjectTool
 
         void TryGetEngineInstalls()
         {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            this.Text = $"UEProjectTool - v{fileVersionInfo.ProductVersion}";
+
+
             string[] files = System.IO.Directory.GetFiles(Application.StartupPath, "*.uproject");
             if (files.Length > 0)
             {
@@ -95,7 +101,7 @@ namespace UEProjectTool
             if (string.IsNullOrEmpty(ProjectFile))
             {
                 MessageBox.Show("Sorry, but no project file was found!");
-                return;
+                Application.Exit();
             }
 
             // Finds Epic Launcher installs
