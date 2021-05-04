@@ -266,5 +266,10 @@ namespace UEProjectTool
         {
             RegenerateSolution();
         }
+
+        private void btnOpenEngineDir_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(cbSelectedEngine.SelectedItem.ToString());
+        }
     }
 }

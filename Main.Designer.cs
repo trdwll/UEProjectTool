@@ -43,6 +43,7 @@
             this.cbRecycle = new System.Windows.Forms.CheckBox();
             this.cbGenSolution = new System.Windows.Forms.CheckBox();
             this.btnRegenerate = new System.Windows.Forms.Button();
+            this.btnOpenEngineDir = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -54,7 +55,7 @@
             this.cbSelectedEngine.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSelectedEngine.Location = new System.Drawing.Point(12, 12);
             this.cbSelectedEngine.Name = "cbSelectedEngine";
-            this.cbSelectedEngine.Size = new System.Drawing.Size(499, 32);
+            this.cbSelectedEngine.Size = new System.Drawing.Size(451, 32);
             this.cbSelectedEngine.TabIndex = 0;
             // 
             // btnCleanProject
@@ -203,11 +204,22 @@
             this.btnRegenerate.UseVisualStyleBackColor = true;
             this.btnRegenerate.Click += new System.EventHandler(this.btnRegenerate_Click);
             // 
+            // btnOpenEngineDir
+            // 
+            this.btnOpenEngineDir.Location = new System.Drawing.Point(469, 12);
+            this.btnOpenEngineDir.Name = "btnOpenEngineDir";
+            this.btnOpenEngineDir.Size = new System.Drawing.Size(42, 32);
+            this.btnOpenEngineDir.TabIndex = 15;
+            this.btnOpenEngineDir.Text = "Open";
+            this.btnOpenEngineDir.UseVisualStyleBackColor = true;
+            this.btnOpenEngineDir.Click += new System.EventHandler(this.btnOpenEngineDir_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(523, 288);
+            this.Controls.Add(this.btnOpenEngineDir);
             this.Controls.Add(this.btnRegenerate);
             this.Controls.Add(this.cbGenSolution);
             this.Controls.Add(this.cbRecycle);
@@ -249,6 +261,7 @@
         private System.Windows.Forms.CheckBox cbRecycle;
         private System.Windows.Forms.CheckBox cbGenSolution;
         private System.Windows.Forms.Button btnRegenerate;
+        private System.Windows.Forms.Button btnOpenEngineDir;
     }
 }
 
