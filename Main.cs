@@ -64,34 +64,34 @@ namespace UEProjectTool
 
                 if (cbGenSolution.Checked)
                 {
-                    string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
-                    if (File.Exists(UBT))
-                    {
-                        string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
-
-                        if (File.Exists(ProjectSln))
-                        {
-                            File.Delete(ProjectSln);
-                        }
-
-                        string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
-                        ProcessStartInfo process = new ProcessStartInfo();
-                        process.WindowStyle = ProcessWindowStyle.Normal;
-                        process.FileName = "cmd.exe";
-                        process.Arguments = $"/k \"{command}\"";
-                        Process.Start(process);
-                    }
+                    RegenerateSolution();
                 }
+            }
+        }
+
+        void RegenerateSolution()
+        {
+            string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
+            if (File.Exists(UBT))
+            {
+                string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
+
+                if (File.Exists(ProjectSln))
+                {
+                    File.Delete(ProjectSln);
+                }
+
+                string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
+                ProcessStartInfo process = new ProcessStartInfo();
+                process.WindowStyle = ProcessWindowStyle.Normal;
+                process.FileName = "cmd.exe";
+                process.Arguments = $"/k \"{command}\"";
+                Process.Start(process);
             }
         }
 
         void TryGetEngineInstalls()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            this.Text = $"UEProjectTool - v{fileVersionInfo.ProductVersion}";
-
-
             string[] files = System.IO.Directory.GetFiles(Application.StartupPath, "*.uproject");
             if (files.Length > 0)
             {
@@ -139,6 +139,15 @@ namespace UEProjectTool
 
                 key.Close();
             }
+        }
+
+        protected override void OnLoad(System.EventArgs e)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+            this.Text = $"UEProjectTool - v{fileVersionInfo.ProductVersion}";
+
+            TryGetEngineInstalls();
 
             // Parses the uproject to get the current engine identifier for the project
             string CurEnginePath = "";
@@ -169,11 +178,6 @@ namespace UEProjectTool
             {
                 cbSelectedEngine.SelectedIndex = 0;
             }
-        }
-
-        protected override void OnLoad(System.EventArgs e)
-        {
-            TryGetEngineInstalls();
 
             cbRecycle.Checked = Properties.Settings.Default.Recycle;
             cbGenSolution.Checked = Properties.Settings.Default.GenSolution;
@@ -256,6 +260,11 @@ namespace UEProjectTool
             Properties.Settings.Default.Recycle = cbRecycle.Checked;
             Properties.Settings.Default.GenSolution = cbGenSolution.Checked;
             Properties.Settings.Default.Save();
+        }
+
+        private void btnRegenerate_Click(object sender, EventArgs e)
+        {
+            RegenerateSolution();
         }
     }
 }
