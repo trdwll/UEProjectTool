@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
 
 using Microsoft.Win32;
 using Microsoft.VisualBasic.FileIO;
@@ -30,7 +31,7 @@ namespace UEProjectTool
         private string PathToEngineExe = "\\Engine\\Binaries\\Win64\\UE4Editor.exe";
         private bool bEngineExists = false;
         private string ProjectFile = "";
-        private List<string> EngineInstalls = new List<string>();
+        private Dictionary<string, string> EngineInstalls = new Dictionary<string, string>();
 
         private void btnCleanProject_Click(object sender, EventArgs e)
         {
@@ -85,7 +86,19 @@ namespace UEProjectTool
 
         void TryGetEngineInstalls()
         {
-            // #TODO: Find the source build installs also
+            string[] files = System.IO.Directory.GetFiles(Application.StartupPath, "*.uproject");
+            if (files.Length > 0)
+            {
+                ProjectFile = files[0];
+            }
+
+            if (string.IsNullOrEmpty(ProjectFile))
+            {
+                MessageBox.Show("Sorry, but no project file was found!");
+                return;
+            }
+
+            // Finds Epic Launcher installs
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey("SOFTWARE\\EpicGames\\Unreal Engine"))
             {
                 string[] keys = key.GetSubKeyNames();
@@ -96,29 +109,65 @@ namespace UEProjectTool
                     if (Directory.Exists(EngineInstall))
                     {
                         cbSelectedEngine.Items.Add(EngineInstall);
+                        EngineInstalls.Add(k, EngineInstall);
                     }
                 }
 
                 key.Close();
             }
 
-            // #TODO: read the project file and set the selected index to that engine
-            if (cbSelectedEngine.Items.Count > 0)
+            // Finds source installs
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Epic Games\\Unreal Engine\\Builds"))
+            {
+                string[] keys = key.GetValueNames();
+                foreach (string k in keys)
+                {
+                    string EngineInstall = key.GetValue(k).ToString();
+
+                    if (Directory.Exists(EngineInstall))
+                    {
+                        cbSelectedEngine.Items.Add(EngineInstall);
+                        EngineInstalls.Add(k, EngineInstall);
+                    }
+                }
+
+                key.Close();
+            }
+
+            // Parses the uproject to get the current engine identifier for the project
+            string CurEnginePath = "";
+            using (StreamReader r = new StreamReader(ProjectFile))
+            {
+                string json = r.ReadToEnd();
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                dynamic array = serializer.Deserialize<dynamic>(json);
+
+                foreach (var a in array)
+                {
+                    if (a.Key == "EngineAssociation")
+                    {
+                        CurEnginePath = a.Value.ToString();
+                        break;
+                    }
+                }
+
+                r.Close();
+            }
+
+            if (!string.IsNullOrEmpty(CurEnginePath))
+            {
+                // Set the selected engine to the one defined in the uproject
+                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Key == CurEnginePath).Select(x => x.Value).Single().ToString();
+            }
+            else
             {
                 cbSelectedEngine.SelectedIndex = 0;
-                bEngineExists = true;
             }
         }
 
         protected override void OnLoad(System.EventArgs e)
         {
             TryGetEngineInstalls();
-
-            string[] files = System.IO.Directory.GetFiles(Application.StartupPath, "*.uproject");
-            if (files.Length > 0)
-            {
-                ProjectFile = files[0];
-            }
 
             cbRecycle.Checked = Properties.Settings.Default.Recycle;
             cbGenSolution.Checked = Properties.Settings.Default.GenSolution;
