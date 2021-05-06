@@ -52,6 +52,7 @@
             // cbSelectedEngine
             // 
             this.cbSelectedEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbSelectedEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSelectedEngine.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSelectedEngine.Location = new System.Drawing.Point(12, 12);
             this.cbSelectedEngine.Name = "cbSelectedEngine";
@@ -60,6 +61,7 @@
             // 
             // btnCleanProject
             // 
+            this.btnCleanProject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCleanProject.Location = new System.Drawing.Point(18, 72);
             this.btnCleanProject.Name = "btnCleanProject";
             this.btnCleanProject.Size = new System.Drawing.Size(88, 32);
@@ -70,6 +72,7 @@
             // 
             // btnTestServer
             // 
+            this.btnTestServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTestServer.Location = new System.Drawing.Point(6, 19);
             this.btnTestServer.Name = "btnTestServer";
             this.btnTestServer.Size = new System.Drawing.Size(109, 32);
@@ -80,6 +83,7 @@
             // 
             // btnTestClient
             // 
+            this.btnTestClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTestClient.Location = new System.Drawing.Point(6, 124);
             this.btnTestClient.Name = "btnTestClient";
             this.btnTestClient.Size = new System.Drawing.Size(109, 32);
@@ -93,6 +97,7 @@
             this.groupBox1.Controls.Add(this.btnRunServerProfiling);
             this.groupBox1.Controls.Add(this.btnTestServer);
             this.groupBox1.Controls.Add(this.btnTestClient);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox1.Location = new System.Drawing.Point(12, 110);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(123, 162);
@@ -102,6 +107,7 @@
             // 
             // btnRunServerProfiling
             // 
+            this.btnRunServerProfiling.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRunServerProfiling.Location = new System.Drawing.Point(6, 57);
             this.btnRunServerProfiling.Name = "btnRunServerProfiling";
             this.btnRunServerProfiling.Size = new System.Drawing.Size(109, 32);
@@ -114,7 +120,8 @@
             // 
             this.groupBox2.Controls.Add(this.numericUpDown1);
             this.groupBox2.Controls.Add(this.btnBatchServer);
-            this.groupBox2.Location = new System.Drawing.Point(339, 110);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox2.Location = new System.Drawing.Point(348, 110);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(172, 100);
             this.groupBox2.TabIndex = 7;
@@ -123,6 +130,7 @@
             // 
             // numericUpDown1
             // 
+            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericUpDown1.Location = new System.Drawing.Point(121, 27);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(40, 20);
@@ -135,6 +143,7 @@
             // 
             // btnBatchServer
             // 
+            this.btnBatchServer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBatchServer.Location = new System.Drawing.Point(6, 19);
             this.btnBatchServer.Name = "btnBatchServer";
             this.btnBatchServer.Size = new System.Drawing.Size(109, 32);
@@ -145,6 +154,7 @@
             // 
             // btnCompileBP
             // 
+            this.btnCompileBP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCompileBP.Location = new System.Drawing.Point(206, 72);
             this.btnCompileBP.Name = "btnCompileBP";
             this.btnCompileBP.Size = new System.Drawing.Size(88, 32);
@@ -156,7 +166,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(385, 266);
+            this.linkLabel1.Location = new System.Drawing.Point(394, 266);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(126, 13);
             this.linkLabel1.TabIndex = 10;
@@ -166,6 +176,7 @@
             // 
             // btnKillUE4
             // 
+            this.btnKillUE4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnKillUE4.Location = new System.Drawing.Point(300, 72);
             this.btnKillUE4.Name = "btnKillUE4";
             this.btnKillUE4.Size = new System.Drawing.Size(88, 32);
@@ -177,9 +188,10 @@
             // cbRecycle
             // 
             this.cbRecycle.AutoSize = true;
-            this.cbRecycle.Location = new System.Drawing.Point(339, 216);
+            this.cbRecycle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbRecycle.Location = new System.Drawing.Point(348, 216);
             this.cbRecycle.Name = "cbRecycle";
-            this.cbRecycle.Size = new System.Drawing.Size(182, 17);
+            this.cbRecycle.Size = new System.Drawing.Size(179, 17);
             this.cbRecycle.TabIndex = 12;
             this.cbRecycle.Text = "Move To Recycling Bin on Clean";
             this.cbRecycle.UseVisualStyleBackColor = true;
@@ -187,15 +199,17 @@
             // cbGenSolution
             // 
             this.cbGenSolution.AutoSize = true;
-            this.cbGenSolution.Location = new System.Drawing.Point(339, 239);
+            this.cbGenSolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbGenSolution.Location = new System.Drawing.Point(348, 239);
             this.cbGenSolution.Name = "cbGenSolution";
-            this.cbGenSolution.Size = new System.Drawing.Size(168, 17);
+            this.cbGenSolution.Size = new System.Drawing.Size(165, 17);
             this.cbGenSolution.TabIndex = 13;
             this.cbGenSolution.Text = "Regenerate Solution on Clean";
             this.cbGenSolution.UseVisualStyleBackColor = true;
             // 
             // btnRegenerate
             // 
+            this.btnRegenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRegenerate.Location = new System.Drawing.Point(112, 72);
             this.btnRegenerate.Name = "btnRegenerate";
             this.btnRegenerate.Size = new System.Drawing.Size(88, 32);
@@ -206,9 +220,10 @@
             // 
             // btnOpenEngineDir
             // 
-            this.btnOpenEngineDir.Location = new System.Drawing.Point(469, 12);
+            this.btnOpenEngineDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenEngineDir.Location = new System.Drawing.Point(469, 13);
             this.btnOpenEngineDir.Name = "btnOpenEngineDir";
-            this.btnOpenEngineDir.Size = new System.Drawing.Size(42, 32);
+            this.btnOpenEngineDir.Size = new System.Drawing.Size(52, 32);
             this.btnOpenEngineDir.TabIndex = 15;
             this.btnOpenEngineDir.Text = "Open";
             this.btnOpenEngineDir.UseVisualStyleBackColor = true;
@@ -218,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 288);
+            this.ClientSize = new System.Drawing.Size(532, 288);
             this.Controls.Add(this.btnOpenEngineDir);
             this.Controls.Add(this.btnRegenerate);
             this.Controls.Add(this.cbGenSolution);

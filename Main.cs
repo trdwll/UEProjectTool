@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Web.Script.Serialization;
 using System.Reflection;
+using System.Drawing;
 
 using Microsoft.Win32;
 using Microsoft.VisualBasic.FileIO;
@@ -33,6 +34,16 @@ namespace UEProjectTool
         private bool bEngineExists = false;
         private string ProjectFile = "";
         private Dictionary<string, string> EngineInstalls = new Dictionary<string, string>();
+
+
+
+        private Color DefaultBackgroundColor = System.Drawing.ColorTranslator.FromHtml("#313131");
+        private Color DefaultTextColor = System.Drawing.ColorTranslator.FromHtml("#DDDDDD");
+        private Color DefaultBackColor2 = System.Drawing.ColorTranslator.FromHtml("#222222");
+        private Color DefaultHoverColor = System.Drawing.ColorTranslator.FromHtml("#DEA309");
+        private Color DefaultPressedColor = System.Drawing.ColorTranslator.FromHtml("#DA8209");
+        private Color DefaultBorderColor = System.Drawing.ColorTranslator.FromHtml("#161616");
+
 
         private void btnCleanProject_Click(object sender, EventArgs e)
         {
@@ -139,10 +150,55 @@ namespace UEProjectTool
 
                 key.Close();
             }
+
+            bEngineExists = EngineInstalls.Count > 0;
         }
+
+        void InitTheme()
+        {
+            this.BackColor = DefaultBackgroundColor;
+
+            foreach (Button button in this.Controls.OfType<Button>())
+            {
+                button.FlatAppearance.MouseOverBackColor = DefaultHoverColor;
+                button.FlatAppearance.MouseDownBackColor = DefaultPressedColor;
+                button.FlatAppearance.BorderColor = DefaultBorderColor;
+                button.ForeColor = DefaultTextColor;
+            }
+
+            foreach (GroupBox groupbox in this.Controls.OfType<GroupBox>())
+            {
+                groupbox.ForeColor = DefaultTextColor;
+
+                foreach (Button button in groupbox.Controls.OfType<Button>())
+                {
+                    button.FlatAppearance.MouseOverBackColor = DefaultHoverColor;
+                    button.FlatAppearance.MouseDownBackColor = DefaultPressedColor;
+                    button.FlatAppearance.BorderColor = DefaultBorderColor;
+                    button.ForeColor = DefaultTextColor;
+                }
+            }
+
+            foreach (CheckBox checkbox in this.Controls.OfType<CheckBox>())
+            {
+                checkbox.ForeColor = DefaultTextColor;
+            }
+
+            cbSelectedEngine.BackColor = DefaultBackColor2;
+            cbSelectedEngine.ForeColor = DefaultTextColor;
+
+            numericUpDown1.BackColor = DefaultBackColor2;
+            numericUpDown1.ForeColor = DefaultTextColor;
+
+            linkLabel1.LinkColor = System.Drawing.ColorTranslator.FromHtml("#DA8209");
+        }
+
 
         protected override void OnLoad(System.EventArgs e)
         {
+            // set up the theme
+            InitTheme();
+
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             this.Text = $"UEProjectTool - v{fileVersionInfo.ProductVersion}";
