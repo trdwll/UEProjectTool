@@ -44,6 +44,7 @@
             this.cbGenSolution = new System.Windows.Forms.CheckBox();
             this.btnRegenerate = new System.Windows.Forms.Button();
             this.btnOpenEngineDir = new System.Windows.Forms.Button();
+            this.btnCleanEngine = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -58,6 +59,7 @@
             this.cbSelectedEngine.Name = "cbSelectedEngine";
             this.cbSelectedEngine.Size = new System.Drawing.Size(451, 32);
             this.cbSelectedEngine.TabIndex = 0;
+            this.cbSelectedEngine.SelectedIndexChanged += new System.EventHandler(this.cbSelectedEngine_SelectedIndexChanged);
             // 
             // btnCleanProject
             // 
@@ -229,11 +231,24 @@
             this.btnOpenEngineDir.UseVisualStyleBackColor = true;
             this.btnOpenEngineDir.Click += new System.EventHandler(this.btnOpenEngineDir_Click);
             // 
+            // btnCleanEngine
+            // 
+            this.btnCleanEngine.Enabled = false;
+            this.btnCleanEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCleanEngine.Location = new System.Drawing.Point(433, 72);
+            this.btnCleanEngine.Name = "btnCleanEngine";
+            this.btnCleanEngine.Size = new System.Drawing.Size(88, 32);
+            this.btnCleanEngine.TabIndex = 16;
+            this.btnCleanEngine.Text = "Clean Engine";
+            this.btnCleanEngine.UseVisualStyleBackColor = true;
+            this.btnCleanEngine.Click += new System.EventHandler(this.btnCleanEngine_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 288);
+            this.Controls.Add(this.btnCleanEngine);
             this.Controls.Add(this.btnOpenEngineDir);
             this.Controls.Add(this.btnRegenerate);
             this.Controls.Add(this.cbGenSolution);
@@ -277,6 +292,7 @@
         private System.Windows.Forms.CheckBox cbGenSolution;
         private System.Windows.Forms.Button btnRegenerate;
         private System.Windows.Forms.Button btnOpenEngineDir;
+        private System.Windows.Forms.Button btnCleanEngine;
     }
 }
 

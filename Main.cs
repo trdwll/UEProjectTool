@@ -30,12 +30,25 @@ namespace UEProjectTool
             CompileBP
         }
 
-        private string PathToEngineExe = "\\Engine\\Binaries\\Win64\\UE4Editor.exe";
+        private struct EngineInstall
+        {
+            public string Name;
+            public string Path;
+            public bool bIsSourceBuild;
+
+            public EngineInstall(string name, string path, bool bSource)
+            {
+                Name = name;
+                Path = path;
+                bIsSourceBuild = bSource;
+            }
+        }
+
+
         private bool bEngineExists = false;
         private string ProjectFile = "";
-        private Dictionary<string, string> EngineInstalls = new Dictionary<string, string>();
-
-
+        private List<EngineInstall> EngineInstalls = new List<EngineInstall>();
+        private EngineInstall CurrentSelectedEngine = new EngineInstall();
 
         private Color DefaultBackgroundColor = System.Drawing.ColorTranslator.FromHtml("#313131");
         private Color DefaultTextColor = System.Drawing.ColorTranslator.FromHtml("#DDDDDD");
@@ -82,7 +95,7 @@ namespace UEProjectTool
 
         void RegenerateSolution()
         {
-            string UBT = $"{cbSelectedEngine.Text}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
+            string UBT = $"{CurrentSelectedEngine.Path}\\Engine\\Binaries\\DotNET\\UnrealBuildTool.exe";
             if (File.Exists(UBT))
             {
                 string ProjectSln = $@"{Application.StartupPath}\\{Path.GetFileNameWithoutExtension(ProjectFile)}.sln";
@@ -92,12 +105,14 @@ namespace UEProjectTool
                     File.Delete(ProjectSln);
                 }
 
-                string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket";
+                string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket -progress & exit";
                 ProcessStartInfo process = new ProcessStartInfo();
                 process.WindowStyle = ProcessWindowStyle.Normal;
                 process.FileName = "cmd.exe";
                 process.Arguments = $"/k \"{command}\"";
                 Process.Start(process);
+
+                // Update the uproject to be the new engine since UBT isn't updating it...
             }
         }
 
@@ -121,12 +136,12 @@ namespace UEProjectTool
                 string[] keys = key.GetSubKeyNames();
                 foreach (string k in keys)
                 {
-                    string EngineInstall = key.OpenSubKey(k).GetValue("InstalledDirectory").ToString();
+                    string EnginePath = key.OpenSubKey(k).GetValue("InstalledDirectory").ToString();
 
-                    if (Directory.Exists(EngineInstall))
+                    if (Directory.Exists(EnginePath))
                     {
-                        cbSelectedEngine.Items.Add(EngineInstall);
-                        EngineInstalls.Add(k, EngineInstall);
+                        cbSelectedEngine.Items.Add(EnginePath);
+                        EngineInstalls.Add(new EngineInstall(k, EnginePath, false));
                     }
                 }
 
@@ -139,12 +154,12 @@ namespace UEProjectTool
                 string[] keys = key.GetValueNames();
                 foreach (string k in keys)
                 {
-                    string EngineInstall = key.GetValue(k).ToString();
+                    string EnginePath = key.GetValue(k).ToString().Replace('/', '\\');
 
-                    if (Directory.Exists(EngineInstall))
+                    if (Directory.Exists(EnginePath))
                     {
-                        cbSelectedEngine.Items.Add(EngineInstall);
-                        EngineInstalls.Add(k, EngineInstall);
+                        cbSelectedEngine.Items.Add(EnginePath);
+                        EngineInstalls.Add(new EngineInstall(k, EnginePath, true));
                     }
                 }
 
@@ -193,7 +208,6 @@ namespace UEProjectTool
             linkLabel1.LinkColor = System.Drawing.ColorTranslator.FromHtml("#DA8209");
         }
 
-
         protected override void OnLoad(System.EventArgs e)
         {
             // set up the theme
@@ -228,7 +242,7 @@ namespace UEProjectTool
             if (!string.IsNullOrEmpty(CurEnginePath))
             {
                 // Set the selected engine to the one defined in the uproject
-                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Key == CurEnginePath).Select(x => x.Value).Single().ToString();
+                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurEnginePath).Select(x => x.Path).Single().ToString();
             }
             else
             {
@@ -246,24 +260,25 @@ namespace UEProjectTool
 
         void RunCmd(EJobType Command, int Port = 0)
         {
-            string EnginePath = $"{cbSelectedEngine.SelectedItem}{PathToEngineExe}";
+            string EnginePath = "\\Engine\\Binaries\\Win64\\UE4Editor.exe";
+
             string JobCommand = "";
             switch (Command)
             {
                 case EJobType.BatchServer:
-                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
+                    JobCommand = $"\"{CurrentSelectedEngine.Path}{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
                     break;
                 case EJobType.CompileBP:
-                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -run=CompileAllBlueprints";
+                    JobCommand = $"\"{CurrentSelectedEngine.Path}{EnginePath}\" \"{ProjectFile}\" -run=CompileAllBlueprints";
                     break;
                 case EJobType.TestClient:
-                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -game -log -resX=900 -resY=700 -windowed";
+                    JobCommand = $"\"{CurrentSelectedEngine.Path}{EnginePath}\" \"{ProjectFile}\" -game -log -resX=900 -resY=700 -windowed";
                     break;
                 case EJobType.TestServer:
-                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
+                    JobCommand = $"\"{CurrentSelectedEngine.Path}{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port}";
                     break;
                 case EJobType.TestServerProfiling:
-                    JobCommand = $"\"{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port} -networkprofiler=true";
+                    JobCommand = $"\"{CurrentSelectedEngine.Path}{EnginePath}\" \"{ProjectFile}\" -server -log -Port=7777 -QueryPort={Port} -networkprofiler=true";
                     break;
             }
 
@@ -326,6 +341,19 @@ namespace UEProjectTool
         private void btnOpenEngineDir_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(cbSelectedEngine.SelectedItem.ToString());
+        }
+
+        private void cbSelectedEngine_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // bool bIsSourceBuild = EngineInstalls.Where(x => x.Path == cbSelectedEngine.SelectedItem.ToString() && x.bIsSourceBuild);
+            // btnCleanEngine.Enabled = bIsSourceBuild;
+
+            CurrentSelectedEngine.Path = cbSelectedEngine.SelectedItem.ToString();
+        }
+
+        private void btnCleanEngine_Click(object sender, EventArgs e)
+        {
+            // do a cleanup of the engine ... 150GB is insane
         }
     }
 }
