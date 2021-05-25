@@ -49,6 +49,7 @@ namespace UEProjectTool
         private string ProjectFile = "";
         private List<EngineInstall> EngineInstalls = new List<EngineInstall>();
         private EngineInstall CurrentSelectedEngine = new EngineInstall();
+        private string CurrentProjectEngine;
 
         private Color DefaultBackgroundColor = System.Drawing.ColorTranslator.FromHtml("#313131");
         private Color DefaultTextColor = System.Drawing.ColorTranslator.FromHtml("#DDDDDD");
@@ -56,7 +57,6 @@ namespace UEProjectTool
         private Color DefaultHoverColor = System.Drawing.ColorTranslator.FromHtml("#DEA309");
         private Color DefaultPressedColor = System.Drawing.ColorTranslator.FromHtml("#DA8209");
         private Color DefaultBorderColor = System.Drawing.ColorTranslator.FromHtml("#161616");
-
 
         private void btnCleanProject_Click(object sender, EventArgs e)
         {
@@ -232,6 +232,7 @@ namespace UEProjectTool
                     if (a.Key == "EngineAssociation")
                     {
                         CurEnginePath = a.Value.ToString();
+                        CurrentProjectEngine = a.Key.ToString();
                         break;
                     }
                 }
@@ -345,10 +346,14 @@ namespace UEProjectTool
 
         private void cbSelectedEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // bool bIsSourceBuild = EngineInstalls.Where(x => x.Path == cbSelectedEngine.SelectedItem.ToString() && x.bIsSourceBuild);
-            // btnCleanEngine.Enabled = bIsSourceBuild;
+            bool bIsSourceBuild = EngineInstalls.Any(x => x.Path == cbSelectedEngine.SelectedItem.ToString() && x.bIsSourceBuild);
+            //btnCleanEngine.Enabled = bIsSourceBuild;
 
+            string EngineName = EngineInstalls.Where(x => x.Path == cbSelectedEngine.SelectedItem.ToString()).Single().Name;
+
+            CurrentSelectedEngine.Name = EngineName;
             CurrentSelectedEngine.Path = cbSelectedEngine.SelectedItem.ToString();
+            CurrentSelectedEngine.bIsSourceBuild = bIsSourceBuild;
         }
 
         private void btnCleanEngine_Click(object sender, EventArgs e)
