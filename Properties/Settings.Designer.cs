@@ -38,12 +38,24 @@ namespace UEProjectTool.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool GenSolution {
+        public bool bGenSolution {
             get {
-                return ((bool)(this["GenSolution"]));
+                return ((bool)(this["bGenSolution"]));
             }
             set {
-                this["GenSolution"] = value;
+                this["bGenSolution"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool bUpdateUProject {
+            get {
+                return ((bool)(this["bUpdateUProject"]));
+            }
+            set {
+                this["bUpdateUProject"] = value;
             }
         }
     }

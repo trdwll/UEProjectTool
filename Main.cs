@@ -105,6 +105,18 @@ namespace UEProjectTool
                     File.Delete(ProjectSln);
                 }
 
+                if (cbUpdateUProject.Checked)
+                {
+                    // Write to the uproject with the new engine version as UBT doesn't do that for you...
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    string json = File.ReadAllText(ProjectFile);
+                    dynamic array = serializer.Deserialize<dynamic>(json);
+
+                    array["EngineAssociation"] = CurrentSelectedEngine.Name;
+                    string new_json = serializer.Serialize(array);
+                    File.WriteAllText(ProjectFile, FormatOutput(new_json));
+                }
+
                 string command = $"\"{UBT}\" -projectfiles -project=\"{ProjectFile}\" -game -rocket -progress & exit";
                 ProcessStartInfo process = new ProcessStartInfo();
                 process.WindowStyle = ProcessWindowStyle.Normal;
@@ -220,30 +232,16 @@ namespace UEProjectTool
             TryGetEngineInstalls();
 
             // Parses the uproject to get the current engine identifier for the project
-            string CurEnginePath = "";
-            using (StreamReader r = new StreamReader(ProjectFile))
-            {
-                string json = r.ReadToEnd();
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                dynamic array = serializer.Deserialize<dynamic>(json);
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            string json = File.ReadAllText(ProjectFile);
+            dynamic array = serializer.Deserialize<dynamic>(json);
 
-                foreach (var a in array)
-                {
-                    if (a.Key == "EngineAssociation")
-                    {
-                        CurEnginePath = a.Value.ToString();
-                        CurrentProjectEngine = a.Key.ToString();
-                        break;
-                    }
-                }
+            CurrentProjectEngine = array["EngineAssociation"].ToString();
 
-                r.Close();
-            }
-
-            if (!string.IsNullOrEmpty(CurEnginePath))
+            if (!string.IsNullOrEmpty(CurrentProjectEngine))
             {
                 // Set the selected engine to the one defined in the uproject
-                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurEnginePath).Select(x => x.Path).Single().ToString();
+                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurrentProjectEngine).Select(x => x.Path).Single().ToString();
             }
             else
             {
@@ -251,7 +249,8 @@ namespace UEProjectTool
             }
 
             cbRecycle.Checked = Properties.Settings.Default.Recycle;
-            cbGenSolution.Checked = Properties.Settings.Default.GenSolution;
+            cbGenSolution.Checked = Properties.Settings.Default.bGenSolution;
+            cbUpdateUProject.Checked = Properties.Settings.Default.bUpdateUProject;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -330,7 +329,8 @@ namespace UEProjectTool
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             Properties.Settings.Default.Recycle = cbRecycle.Checked;
-            Properties.Settings.Default.GenSolution = cbGenSolution.Checked;
+            Properties.Settings.Default.bGenSolution = cbGenSolution.Checked;
+            Properties.Settings.Default.bUpdateUProject = cbUpdateUProject.Checked;
             Properties.Settings.Default.Save();
         }
 
@@ -347,7 +347,7 @@ namespace UEProjectTool
         private void cbSelectedEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool bIsSourceBuild = EngineInstalls.Any(x => x.Path == cbSelectedEngine.SelectedItem.ToString() && x.bIsSourceBuild);
-            //btnCleanEngine.Enabled = bIsSourceBuild;
+            btnCleanEngine.Enabled = bIsSourceBuild;
 
             string EngineName = EngineInstalls.Where(x => x.Path == cbSelectedEngine.SelectedItem.ToString()).Single().Name;
 
@@ -359,6 +359,78 @@ namespace UEProjectTool
         private void btnCleanEngine_Click(object sender, EventArgs e)
         {
             // do a cleanup of the engine ... 150GB is insane
+            MessageBox.Show("Coming soon!");
+        }
+
+        /// <summary>
+        /// Adds indentation and line breaks to output of JavaScriptSerializer
+        /// https://stackoverflow.com/a/23828858
+        /// </summary>
+        private string FormatOutput(string jsonString)
+        {
+            var stringBuilder = new System.Text.StringBuilder();
+
+            bool escaping = false;
+            bool inQuotes = false;
+            int indentation = 0;
+
+            foreach (char character in jsonString)
+            {
+                if (escaping)
+                {
+                    escaping = false;
+                    stringBuilder.Append(character);
+                }
+                else
+                {
+                    if (character == '\\')
+                    {
+                        escaping = true;
+                        stringBuilder.Append(character);
+                    }
+                    else if (character == '\"')
+                    {
+                        inQuotes = !inQuotes;
+                        stringBuilder.Append(character);
+                    }
+                    else if (!inQuotes)
+                    {
+                        if (character == ',')
+                        {
+                            stringBuilder.Append(character);
+                            stringBuilder.Append("\r\n");
+                            stringBuilder.Append('\t', indentation);
+                        }
+                        else if (character == '[' || character == '{')
+                        {
+                            stringBuilder.Append(character);
+                            stringBuilder.Append("\r\n");
+                            stringBuilder.Append('\t', ++indentation);
+                        }
+                        else if (character == ']' || character == '}')
+                        {
+                            stringBuilder.Append("\r\n");
+                            stringBuilder.Append('\t', --indentation);
+                            stringBuilder.Append(character);
+                        }
+                        else if (character == ':')
+                        {
+                            stringBuilder.Append(character);
+                            stringBuilder.Append('\t');
+                        }
+                        else if (!Char.IsWhiteSpace(character))
+                        {
+                            stringBuilder.Append(character);
+                        }
+                    }
+                    else
+                    {
+                        stringBuilder.Append(character);
+                    }
+                }
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

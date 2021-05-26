@@ -5,7 +5,10 @@
     <Setting Name="Recycle" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="GenSolution" Type="System.Boolean" Scope="User">
+    <Setting Name="bGenSolution" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="bUpdateUProject" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

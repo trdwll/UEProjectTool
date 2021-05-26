@@ -45,6 +45,7 @@
             this.btnRegenerate = new System.Windows.Forms.Button();
             this.btnOpenEngineDir = new System.Windows.Forms.Button();
             this.btnCleanEngine = new System.Windows.Forms.Button();
+            this.cbUpdateUProject = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -168,7 +169,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(394, 266);
+            this.linkLabel1.Location = new System.Drawing.Point(395, 286);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(126, 13);
             this.linkLabel1.TabIndex = 10;
@@ -243,11 +244,23 @@
             this.btnCleanEngine.UseVisualStyleBackColor = true;
             this.btnCleanEngine.Click += new System.EventHandler(this.btnCleanEngine_Click);
             // 
+            // cbUpdateUProject
+            // 
+            this.cbUpdateUProject.AutoSize = true;
+            this.cbUpdateUProject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbUpdateUProject.Location = new System.Drawing.Point(348, 262);
+            this.cbUpdateUProject.Name = "cbUpdateUProject";
+            this.cbUpdateUProject.Size = new System.Drawing.Size(181, 17);
+            this.cbUpdateUProject.TabIndex = 17;
+            this.cbUpdateUProject.Text = "Update uproject on Regeneration";
+            this.cbUpdateUProject.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(532, 288);
+            this.ClientSize = new System.Drawing.Size(532, 308);
+            this.Controls.Add(this.cbUpdateUProject);
             this.Controls.Add(this.btnCleanEngine);
             this.Controls.Add(this.btnOpenEngineDir);
             this.Controls.Add(this.btnRegenerate);
@@ -293,6 +306,7 @@
         private System.Windows.Forms.Button btnRegenerate;
         private System.Windows.Forms.Button btnOpenEngineDir;
         private System.Windows.Forms.Button btnCleanEngine;
+        private System.Windows.Forms.CheckBox cbUpdateUProject;
     }
 }
 
