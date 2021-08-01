@@ -39,7 +39,7 @@
             this.btnBatchServer = new System.Windows.Forms.Button();
             this.btnCompileBP = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.btnKillUE4 = new System.Windows.Forms.Button();
+            this.btnKillUnreal = new System.Windows.Forms.Button();
             this.cbRecycle = new System.Windows.Forms.CheckBox();
             this.cbGenSolution = new System.Windows.Forms.CheckBox();
             this.btnRegenerate = new System.Windows.Forms.Button();
@@ -181,16 +181,16 @@
             this.linkLabel1.Text = "By Russ \'trdwll\' Treadwell";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // btnKillUE4
+            // btnKillUnreal
             // 
-            this.btnKillUE4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKillUE4.Location = new System.Drawing.Point(316, 72);
-            this.btnKillUE4.Name = "btnKillUE4";
-            this.btnKillUE4.Size = new System.Drawing.Size(88, 32);
-            this.btnKillUE4.TabIndex = 11;
-            this.btnKillUE4.Text = "Kill UE4";
-            this.btnKillUE4.UseVisualStyleBackColor = true;
-            this.btnKillUE4.Click += new System.EventHandler(this.btnKillUE4_Click);
+            this.btnKillUnreal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnKillUnreal.Location = new System.Drawing.Point(316, 72);
+            this.btnKillUnreal.Name = "btnKillUnreal";
+            this.btnKillUnreal.Size = new System.Drawing.Size(88, 32);
+            this.btnKillUnreal.TabIndex = 11;
+            this.btnKillUnreal.Text = "Kill Unreal";
+            this.btnKillUnreal.UseVisualStyleBackColor = true;
+            this.btnKillUnreal.Click += new System.EventHandler(this.btnKillUE4_Click);
             // 
             // cbRecycle
             // 
@@ -307,7 +307,7 @@
             this.Controls.Add(this.btnRegenerate);
             this.Controls.Add(this.cbGenSolution);
             this.Controls.Add(this.cbRecycle);
-            this.Controls.Add(this.btnKillUE4);
+            this.Controls.Add(this.btnKillUnreal);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnCompileBP);
             this.Controls.Add(this.groupBox2);
@@ -340,7 +340,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Button btnCompileBP;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Button btnKillUE4;
+        private System.Windows.Forms.Button btnKillUnreal;
         private System.Windows.Forms.Button btnRunServerProfiling;
         private System.Windows.Forms.CheckBox cbRecycle;
         private System.Windows.Forms.CheckBox cbGenSolution;

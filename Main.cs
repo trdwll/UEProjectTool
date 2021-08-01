@@ -11,6 +11,7 @@ using System.Drawing;
 using Microsoft.Win32;
 using Microsoft.VisualBasic.FileIO;
 using SearchOption = System.IO.SearchOption;
+using System.Net;
 
 namespace UEProjectTool
 {
@@ -233,6 +234,16 @@ namespace UEProjectTool
             FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
             this.Text = $"UEProjectTool - v{fileVersionInfo.ProductVersion}";
 
+            // version checking
+            WebClient web = new WebClient();
+            string content = web.DownloadString("https://files.trdwll.net/versioning/ueprojecttool.txt");
+            web.Dispose();
+
+            if (Version.Parse(content).CompareTo(Version.Parse(fileVersionInfo.ProductVersion)) > 0)
+            {
+                MessageBox.Show($"There's a new version available!\nThe latest version is {content} and you're on {fileVersionInfo.ProductVersion}.\nGo to https://github.com/trdwll/UEProjectTool to download the latest version.");
+            }
+
             TryGetEngineInstalls();
 
             if (!string.IsNullOrEmpty(ProjectFile))
@@ -327,7 +338,14 @@ namespace UEProjectTool
 
         private void btnKillUE4_Click(object sender, EventArgs e)
         {
+            // UE4
             foreach (var process in Process.GetProcessesByName("UE4Editor"))
+            {
+                process.Kill();
+            }
+
+            // UE5
+            foreach (var process in Process.GetProcessesByName("UnrealEditor"))
             {
                 process.Kill();
             }
