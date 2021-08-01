@@ -46,9 +46,13 @@
             this.btnOpenEngineDir = new System.Windows.Forms.Button();
             this.btnCleanEngine = new System.Windows.Forms.Button();
             this.cbUpdateUProject = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnIgnores = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbSelectedEngine
@@ -65,9 +69,9 @@
             // btnCleanProject
             // 
             this.btnCleanProject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCleanProject.Location = new System.Drawing.Point(18, 72);
+            this.btnCleanProject.Location = new System.Drawing.Point(6, 19);
             this.btnCleanProject.Name = "btnCleanProject";
-            this.btnCleanProject.Size = new System.Drawing.Size(88, 32);
+            this.btnCleanProject.Size = new System.Drawing.Size(111, 32);
             this.btnCleanProject.TabIndex = 3;
             this.btnCleanProject.Text = "Clean Project";
             this.btnCleanProject.UseVisualStyleBackColor = true;
@@ -158,7 +162,7 @@
             // btnCompileBP
             // 
             this.btnCompileBP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCompileBP.Location = new System.Drawing.Point(206, 72);
+            this.btnCompileBP.Location = new System.Drawing.Point(222, 72);
             this.btnCompileBP.Name = "btnCompileBP";
             this.btnCompileBP.Size = new System.Drawing.Size(88, 32);
             this.btnCompileBP.TabIndex = 8;
@@ -180,7 +184,7 @@
             // btnKillUE4
             // 
             this.btnKillUE4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnKillUE4.Location = new System.Drawing.Point(300, 72);
+            this.btnKillUE4.Location = new System.Drawing.Point(316, 72);
             this.btnKillUE4.Name = "btnKillUE4";
             this.btnKillUE4.Size = new System.Drawing.Size(88, 32);
             this.btnKillUE4.TabIndex = 11;
@@ -213,7 +217,7 @@
             // btnRegenerate
             // 
             this.btnRegenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRegenerate.Location = new System.Drawing.Point(112, 72);
+            this.btnRegenerate.Location = new System.Drawing.Point(128, 72);
             this.btnRegenerate.Name = "btnRegenerate";
             this.btnRegenerate.Size = new System.Drawing.Size(88, 32);
             this.btnRegenerate.TabIndex = 14;
@@ -236,9 +240,9 @@
             // 
             this.btnCleanEngine.Enabled = false;
             this.btnCleanEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCleanEngine.Location = new System.Drawing.Point(433, 72);
+            this.btnCleanEngine.Location = new System.Drawing.Point(6, 95);
             this.btnCleanEngine.Name = "btnCleanEngine";
-            this.btnCleanEngine.Size = new System.Drawing.Size(88, 32);
+            this.btnCleanEngine.Size = new System.Drawing.Size(111, 32);
             this.btnCleanEngine.TabIndex = 16;
             this.btnCleanEngine.Text = "Clean Engine";
             this.btnCleanEngine.UseVisualStyleBackColor = true;
@@ -255,13 +259,50 @@
             this.cbUpdateUProject.Text = "Update uproject on Regeneration";
             this.cbUpdateUProject.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Enabled = false;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(6, 57);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 32);
+            this.button1.TabIndex = 18;
+            this.button1.Text = "Clean DDC";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.btnCleanProject);
+            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.btnCleanEngine);
+            this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox3.Location = new System.Drawing.Point(141, 110);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(123, 162);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Cleaning";
+            // 
+            // btnIgnores
+            // 
+            this.btnIgnores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnIgnores.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnIgnores.Location = new System.Drawing.Point(147, 278);
+            this.btnIgnores.Name = "btnIgnores";
+            this.btnIgnores.Size = new System.Drawing.Size(111, 22);
+            this.btnIgnores.TabIndex = 19;
+            this.btnIgnores.Text = "Ignores";
+            this.btnIgnores.UseVisualStyleBackColor = true;
+            this.btnIgnores.Click += new System.EventHandler(this.btnIgnores_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 308);
+            this.Controls.Add(this.btnIgnores);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.cbUpdateUProject);
-            this.Controls.Add(this.btnCleanEngine);
             this.Controls.Add(this.btnOpenEngineDir);
             this.Controls.Add(this.btnRegenerate);
             this.Controls.Add(this.cbGenSolution);
@@ -271,7 +312,6 @@
             this.Controls.Add(this.btnCompileBP);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCleanProject);
             this.Controls.Add(this.cbSelectedEngine);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -282,6 +322,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -307,6 +348,9 @@
         private System.Windows.Forms.Button btnOpenEngineDir;
         private System.Windows.Forms.Button btnCleanEngine;
         private System.Windows.Forms.CheckBox cbUpdateUProject;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button btnIgnores;
     }
 }
 

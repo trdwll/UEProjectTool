@@ -65,6 +65,10 @@ namespace UEProjectTool
                 string[] SearchDirectories = { "Intermediate", "Binaries", "Saved" };
                 string[] dirs = Directory.GetDirectories(Path.GetDirectoryName(ProjectFile), "*", SearchOption.AllDirectories);
                 int count = 0;
+
+                // if a directory exists in the ignore then do nothing for that directory
+                // if a file exist in the ignore then delete all other directories and files in that directory
+
                 foreach (string directory in dirs)
                 {
                     if (SearchDirectories.Any(Path.GetFileName(directory).Equals))
@@ -231,26 +235,29 @@ namespace UEProjectTool
 
             TryGetEngineInstalls();
 
-            // Parses the uproject to get the current engine identifier for the project
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            string json = File.ReadAllText(ProjectFile);
-            dynamic array = serializer.Deserialize<dynamic>(json);
-
-            CurrentProjectEngine = array["EngineAssociation"].ToString();
-
-            if (!string.IsNullOrEmpty(CurrentProjectEngine))
+            if (!string.IsNullOrEmpty(ProjectFile))
             {
-                // Set the selected engine to the one defined in the uproject
-                cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurrentProjectEngine).Select(x => x.Path).Single().ToString();
-            }
-            else
-            {
-                cbSelectedEngine.SelectedIndex = 0;
-            }
+                // Parses the uproject to get the current engine identifier for the project
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                string json = File.ReadAllText(ProjectFile);
+                dynamic array = serializer.Deserialize<dynamic>(json);
 
-            cbRecycle.Checked = Properties.Settings.Default.Recycle;
-            cbGenSolution.Checked = Properties.Settings.Default.bGenSolution;
-            cbUpdateUProject.Checked = Properties.Settings.Default.bUpdateUProject;
+                CurrentProjectEngine = array["EngineAssociation"].ToString();
+
+                if (!string.IsNullOrEmpty(CurrentProjectEngine))
+                {
+                    // Set the selected engine to the one defined in the uproject
+                    cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurrentProjectEngine).Select(x => x.Path).Single().ToString();
+                }
+                else
+                {
+                    cbSelectedEngine.SelectedIndex = 0;
+                }
+
+                cbRecycle.Checked = Properties.Settings.Default.Recycle;
+                cbGenSolution.Checked = Properties.Settings.Default.bGenSolution;
+                cbUpdateUProject.Checked = Properties.Settings.Default.bUpdateUProject;
+            }
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -431,6 +438,12 @@ namespace UEProjectTool
             }
 
             return stringBuilder.ToString();
+        }
+
+        private void btnIgnores_Click(object sender, EventArgs e)
+        {
+            frmIgnores frm = new frmIgnores();
+            frm.ShowDialog();
         }
     }
 }
