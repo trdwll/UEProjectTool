@@ -70,6 +70,8 @@ namespace UEProjectTool
                 // if a directory exists in the ignore then do nothing for that directory
                 // if a file exist in the ignore then delete all other directories and files in that directory
 
+                var Blacklist = Properties.Settings.Default.Ignores;
+
                 foreach (string directory in dirs)
                 {
                     if (SearchDirectories.Any(Path.GetFileName(directory).Equals))
@@ -257,8 +259,21 @@ namespace UEProjectTool
 
                 if (!string.IsNullOrEmpty(CurrentProjectEngine))
                 {
-                    // Set the selected engine to the one defined in the uproject
-                    cbSelectedEngine.SelectedItem = EngineInstalls.Where(x => x.Name == CurrentProjectEngine).Select(x => x.Path).Single().ToString();
+                    try
+                    {
+                        // #TODO: There's a problem with Single, apparently I should use SingleOrDefault or FirstOrDefault, but those don't work...
+                        string Installed = EngineInstalls.Where(x => x.Name == CurrentProjectEngine).Select(x => x.Path).Single().ToString();
+                        if (cbSelectedEngine.Items.Contains(Installed))
+                        {
+                            // Set the selected engine to the one defined in the uproject
+                            cbSelectedEngine.SelectedItem = Installed;
+                        }
+                    }
+                    catch
+                    {
+                        cbSelectedEngine.SelectedIndex = 0;
+                        // Welp, we couldn't find the engine install that your project is using...
+                    }
                 }
                 else
                 {
@@ -462,6 +477,11 @@ namespace UEProjectTool
         {
             frmIgnores frm = new frmIgnores();
             frm.ShowDialog();
+        }
+
+        private void btnCleanDDC_Click(object sender, EventArgs e)
+        {
+            //AppData/Local/UnrealEngine
         }
     }
 }

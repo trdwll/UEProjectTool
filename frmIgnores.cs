@@ -57,7 +57,8 @@ namespace UEProjectTool
 
         private void button1_Click(object sender, EventArgs e)
         {
-            ListViewItem item = listView1.Items.Add("C:/Path/To/Directory/or/File");
+            string CurDir = Application.StartupPath;
+            ListViewItem item = listView1.Items.Add($"{CurDir}/Directory/or/File");
             item.BeginEdit();
         }
 

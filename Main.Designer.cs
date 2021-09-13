@@ -46,7 +46,7 @@
             this.btnOpenEngineDir = new System.Windows.Forms.Button();
             this.btnCleanEngine = new System.Windows.Forms.Button();
             this.cbUpdateUProject = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCleanDDC = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnIgnores = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
@@ -259,21 +259,22 @@
             this.cbUpdateUProject.Text = "Update uproject on Regeneration";
             this.cbUpdateUProject.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnCleanDDC
             // 
-            this.button1.Enabled = false;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Location = new System.Drawing.Point(6, 57);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 32);
-            this.button1.TabIndex = 18;
-            this.button1.Text = "Clean DDC";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCleanDDC.Enabled = false;
+            this.btnCleanDDC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCleanDDC.Location = new System.Drawing.Point(6, 57);
+            this.btnCleanDDC.Name = "btnCleanDDC";
+            this.btnCleanDDC.Size = new System.Drawing.Size(111, 32);
+            this.btnCleanDDC.TabIndex = 18;
+            this.btnCleanDDC.Text = "Clean DDC";
+            this.btnCleanDDC.UseVisualStyleBackColor = true;
+            this.btnCleanDDC.Click += new System.EventHandler(this.btnCleanDDC_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.btnCleanProject);
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.btnCleanDDC);
             this.groupBox3.Controls.Add(this.btnCleanEngine);
             this.groupBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox3.Location = new System.Drawing.Point(141, 110);
@@ -285,6 +286,7 @@
             // 
             // btnIgnores
             // 
+            this.btnIgnores.Enabled = false;
             this.btnIgnores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnIgnores.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnIgnores.Location = new System.Drawing.Point(147, 278);
@@ -348,7 +350,7 @@
         private System.Windows.Forms.Button btnOpenEngineDir;
         private System.Windows.Forms.Button btnCleanEngine;
         private System.Windows.Forms.CheckBox cbUpdateUProject;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCleanDDC;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnIgnores;
     }
