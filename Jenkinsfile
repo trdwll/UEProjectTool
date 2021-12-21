@@ -25,7 +25,7 @@ pipeline {
         branch "main"
       }
       steps {
-        bat "py -u C:\\jenkins.py UEProjectTool Publish \"%WORKSPACE%\""
+        bat "C:\\JenkinsBuilder.exe UEProjectTool Publish \"%WORKSPACE%\""
       }
     }
   }
